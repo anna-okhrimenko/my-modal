@@ -4,17 +4,24 @@ const installModal = () => {
     const modalClose = document.querySelectorAll('.modal-close');
     const callModalBtn = document.querySelectorAll('[data-modal]');
 
-    const overFlowHiddenOn = (selector) => selector.classList.add('overflow-hidden');
-    const overFlowHiddenOff = (selector) => selector.classList.remove('overflow-hidden');
+    const overFlowHiddenOn = (selector) => {
+        const scrollWidth = window.innerWidth - body.offsetWidth;
+        selector.classList.add('overflow-hidden');
+        selector.style['padding-right'] = scrollWidth + "px";   //scroll
+    };
+    const overFlowHiddenOff = (selector) => {
+        selector.classList.remove('overflow-hidden');
+        selector.style['padding-right'] = null;                 //scroll
+    };
     const visibModal = (selector) => selector.classList.add('open')
-    const hiddenModal = (selector) => selector.classList.remove('open')
 
     const closeModal = () =>{
         overFlowHiddenOff(body);
-        modalOverlay.forEach(modal => modal.classList.remove('open')); //??????
+        modalOverlay.forEach(modal => modal.classList.remove('open')); 
     }
 
     window.addEventListener("click", function(event) {
+        console.log(event.target);
         modalOverlay.forEach(item => {
             if(event.target == item) {
                 closeModal();
@@ -37,7 +44,8 @@ const installModal = () => {
     });
 
     modalClose.forEach(closeBtn => {
-        closeBtn.addEventListener('click', () => {
+        closeBtn.addEventListener('click', (event) => {
+            event.preventDefault();
             closeModal();
         })
     });
