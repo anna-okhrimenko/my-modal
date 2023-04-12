@@ -146,5 +146,9 @@ a {
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    .content-block img {
+        max-width: 100%;
+    }
 }
 
